@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarm</title>
+</head>
+<body>
+    <div>
+        <p>Current TIme : <span id="currentTime"></span></p>
+        <input type="time" id="alarmTime">
+        <button onclick="setAlaram()">Set Alarm</button>
+        <button onclick="alarmSound.pause()">Stop Alarm</button>
+        <!-- <audio src="/public/best_alarm.mp3" controls></aud?io> -->
+    </div>
+    <script>
+        function currentTime(){
+            let date = new Date();
+            let now = date.toLocaleString('en-us',{hour12: false});
+            document.getElementById('currentTime').innerHTML = now;
+        }
+        setInterval(currentTime ,1);
+
+        let alarmSound = new Audio('/public/best_alarm.mp3');
+        
+        function setAlaram(){
+            let alarmTime = document.getElementById("alarmTime").value;
+            let now = new Date();
+            let alarm = new Date(now.toDateString() + " " + alarmTime);
+
+            let timeRemaining = alarm - now ;
+
+            setTimeout(playAlarm , timeRemaining);
+
+            document.getElementById('alarmTime').disabled =true
+        }
+
+        function playAlarm(){
+            alarmSound.play();
+            document.getElementById("alarmTime").disabled = false;
+        }
+    </script>
+</body>
+</html>
